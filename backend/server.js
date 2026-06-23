@@ -9,7 +9,15 @@ import paymentRoutes from './routes/paymentRoutes.js';
 import analyticsRoutes from './routes/analyticsRoutes.js';
 
 const app = express();
-app.use(cors());
+const allowedOrigins = [
+    'http://localhost:5173',
+    process.env.FRONTEND_URL, // e.g. https://cartworx.vercel.app
+].filter(Boolean);
+
+app.use(cors({
+    origin: allowedOrigins,
+    credentials: true,
+}));
 
 const PORT = process.env.PORT || 8000;
 
