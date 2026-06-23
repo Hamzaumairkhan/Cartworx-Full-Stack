@@ -28,7 +28,7 @@ const Register = () => {
     }
     dispatch(loginStart());
     try {
-      const { data } = await axios.post(`${import.meta.env.VITE_API_URL || '/_/backend/api'}/auth/register`, {
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL || '/api'}/auth/register`, {
         name: form.name,
         email: form.email,
         password: form.password,

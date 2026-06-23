@@ -46,7 +46,7 @@ const VerifyOtp = () => {
     dispatch(loginStart());
 
     try {
-      const { data } = await axios.post(`${import.meta.env.VITE_API_URL || '/_/backend/api'}/auth/verify-otp`, { email, otp });
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL || '/api'}/auth/verify-otp`, { email, otp });
       
       // verify-otp returns full user info + token on success
       dispatch(loginSuccess(data));
@@ -69,7 +69,7 @@ const VerifyOtp = () => {
     }
     setLocalError('');
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL || '/_/backend/api'}/auth/resend-otp`, { email });
+      await axios.post(`${import.meta.env.VITE_API_URL || '/api'}/auth/resend-otp`, { email });
       toast.success('A new OTP has been sent to your email.');
       setTimer(60);
       setCanResend(false);
