@@ -1,0 +1,645 @@
+/* ============================================
+   CARTWORX — GLOBAL ANIMATIONS & TRANSITIONS
+   ============================================ */
+
+/* ===== Keyframes ===== */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(30px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes scaleInBounce {
+  0%   { opacity: 0; transform: scale(0.6); }
+  70%  { transform: scale(1.08); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes pulse-red {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.4); }
+  50%       { box-shadow: 0 0 0 10px rgba(229, 62, 62, 0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(229, 62, 62, 0.4); }
+  50%       { box-shadow: 0 0 24px rgba(229, 62, 62, 0.8); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+@keyframes ripple {
+  0%   { transform: scale(0); opacity: 0.6; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14%       { transform: scale(1.15); }
+  28%       { transform: scale(1); }
+  42%       { transform: scale(1.12); }
+  70%       { transform: scale(1); }
+}
+
+@keyframes typewriter {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes staggerFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Animation Utility Classes ===== */
+
+.anim-fade-in-up   { animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both; }
+.anim-fade-in-down { animation: fadeInDown 0.6s cubic-bezier(0.4, 0, 0.2, 1) both; }
+.anim-fade-in-left { animation: fadeInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) both; }
+.anim-fade-in-right{ animation: fadeInRight 0.6s cubic-bezier(0.4, 0, 0.2, 1) both; }
+.anim-fade-in      { animation: fadeIn 0.5s ease both; }
+.anim-scale-in     { animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.anim-scale-bounce { animation: scaleInBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.anim-float        { animation: float 3s ease-in-out infinite; }
+.anim-bounce       { animation: bounce 1.2s ease-in-out infinite; }
+.anim-pulse-glow   { animation: pulse-glow 2s ease-in-out infinite; }
+.anim-spin         { animation: spin 0.8s linear infinite; }
+.anim-heartbeat    { animation: heartbeat 1.5s ease-in-out infinite; }
+
+/* Stagger delays */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+.delay-700 { animation-delay: 0.7s; }
+.delay-800 { animation-delay: 0.8s; }
+
+/* ===== Page Entry Animation ===== */
+.page-enter {
+  animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* ===== Skeleton / Shimmer Loading ===== */
+.skeleton {
+  background: linear-gradient(90deg,
+    var(--bg-card) 25%,
+    var(--bg-card-hover) 50%,
+    var(--bg-card) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ===== Navbar Animations ===== */
+.navbar {
+  transition: background 0.4s ease, box-shadow 0.4s ease, backdrop-filter 0.4s ease !important;
+}
+
+.navbar-logo {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease !important;
+}
+.navbar-logo:hover {
+  transform: scale(1.05) !important;
+}
+
+.navbar-links a {
+  transition: color 0.25s ease, background 0.25s ease, transform 0.2s ease !important;
+}
+.navbar-links a:hover {
+  transform: translateY(-1px) !important;
+}
+
+.nav-icon-btn {
+  transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease,
+              transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+.nav-icon-btn:hover {
+  transform: scale(1.12) !important;
+}
+
+.nav-cart-badge {
+  animation: pulse-red 2s infinite !important;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.nav-dropdown {
+  animation: scaleIn 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both !important;
+  transform-origin: top right;
+}
+
+.nav-dropdown a,
+.nav-dropdown button {
+  transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease !important;
+}
+.nav-dropdown a:hover,
+.nav-dropdown button:hover {
+  transform: translateX(4px) !important;
+}
+
+.mobile-menu {
+  animation: fadeInDown 0.3s ease both !important;
+}
+
+/* ===== Auth Card Animations ===== */
+.auth-card {
+  animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both !important;
+}
+
+.auth-logo {
+  animation: fadeInDown 0.5s ease 0.1s both !important;
+}
+
+.auth-title {
+  animation: fadeInUp 0.5s ease 0.2s both !important;
+}
+
+.auth-subtitle {
+  animation: fadeInUp 0.5s ease 0.3s both !important;
+}
+
+.auth-input-group {
+  animation: fadeInUp 0.5s ease both;
+}
+.auth-input-group:nth-child(1) { animation-delay: 0.35s; }
+.auth-input-group:nth-child(2) { animation-delay: 0.45s; }
+.auth-input-group:nth-child(3) { animation-delay: 0.55s; }
+.auth-input-group:nth-child(4) { animation-delay: 0.65s; }
+
+.auth-input {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease !important;
+}
+.auth-input:focus {
+  transform: scale(1.01) !important;
+}
+
+.auth-submit-btn {
+  animation: fadeInUp 0.5s ease 0.6s both !important;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease, opacity 0.3s ease !important;
+}
+.auth-submit-btn:hover {
+  transform: translateY(-3px) scale(1.01) !important;
+}
+.auth-submit-btn:active {
+  transform: translateY(0) scale(0.99) !important;
+}
+
+.auth-footer {
+  animation: fadeIn 0.5s ease 0.75s both !important;
+}
+
+.auth-footer a {
+  transition: color 0.25s ease, letter-spacing 0.25s ease !important;
+}
+.auth-footer a:hover {
+  letter-spacing: 0.3px !important;
+}
+
+/* ===== Product Card Animations ===== */
+.product-card {
+  animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) both !important;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.35s ease, border-color 0.35s ease !important;
+}
+
+.product-card:hover {
+  transform: translateY(-8px) scale(1.01) !important;
+}
+
+.product-card-img img {
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.product-card:hover .product-card-img img {
+  transform: scale(1.1) !important;
+}
+
+.product-card-overlay {
+  transition: opacity 0.35s ease !important;
+}
+
+.product-quick-add {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.25s ease !important;
+  animation: fadeInUp 0.3s ease both;
+}
+.product-quick-add:hover {
+  transform: scale(1.04) translateY(-1px) !important;
+}
+
+.product-wishlist-btn {
+  transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease,
+              transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+.product-wishlist-btn:hover {
+  transform: scale(1.2) !important;
+  animation: heartbeat 0.8s ease !important;
+}
+
+.product-add-btn {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease !important;
+}
+.product-add-btn:hover {
+  transform: scale(1.2) rotate(90deg) !important;
+  box-shadow: 0 0 0 8px rgba(229, 62, 62, 0.15) !important;
+}
+.product-add-btn:active {
+  transform: scale(0.95) rotate(90deg) !important;
+}
+
+.product-badge {
+  animation: scaleInBounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.product-name {
+  transition: color 0.25s ease !important;
+}
+.product-card:hover .product-name {
+  color: var(--primary-light) !important;
+}
+
+/* ===== Shop Page Animations ===== */
+.shop-hero h1 {
+  animation: fadeInDown 0.7s cubic-bezier(0.4, 0, 0.2, 1) both !important;
+}
+.shop-hero p {
+  animation: fadeInUp 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both !important;
+}
+
+.shop-sidebar {
+  animation: fadeInLeft 0.6s ease 0.1s both !important;
+}
+
+.filter-card {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+.filter-card:hover {
+  border-color: rgba(229, 62, 62, 0.25) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.filter-search input {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease !important;
+}
+.filter-search input:focus {
+  transform: scale(1.01) !important;
+}
+
+.category-list li button {
+  transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease, padding-left 0.2s ease !important;
+}
+.category-list li button:hover {
+  padding-left: 1.25rem !important;
+}
+.category-list li button.active {
+  padding-left: 1.25rem !important;
+}
+
+.sort-select {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease !important;
+}
+.sort-select:hover {
+  border-color: rgba(229, 62, 62, 0.4) !important;
+  transform: scale(1.01) !important;
+}
+
+.products-grid .product-card:nth-child(1)  { animation-delay: 0.05s; }
+.products-grid .product-card:nth-child(2)  { animation-delay: 0.10s; }
+.products-grid .product-card:nth-child(3)  { animation-delay: 0.15s; }
+.products-grid .product-card:nth-child(4)  { animation-delay: 0.20s; }
+.products-grid .product-card:nth-child(5)  { animation-delay: 0.25s; }
+.products-grid .product-card:nth-child(6)  { animation-delay: 0.30s; }
+.products-grid .product-card:nth-child(7)  { animation-delay: 0.35s; }
+.products-grid .product-card:nth-child(8)  { animation-delay: 0.40s; }
+.products-grid .product-card:nth-child(9)  { animation-delay: 0.45s; }
+.products-grid .product-card:nth-child(10) { animation-delay: 0.50s; }
+
+/* ===== Cart Animations ===== */
+.cart-item {
+  animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) both !important;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease !important;
+}
+.cart-item:hover {
+  border-color: rgba(229, 62, 62, 0.25) !important;
+  transform: translateX(4px) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.cart-item:nth-child(1) { animation-delay: 0.05s; }
+.cart-item:nth-child(2) { animation-delay: 0.12s; }
+.cart-item:nth-child(3) { animation-delay: 0.19s; }
+.cart-item:nth-child(4) { animation-delay: 0.26s; }
+.cart-item:nth-child(5) { animation-delay: 0.33s; }
+
+.cart-item-img {
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+  overflow: hidden;
+}
+.cart-item:hover .cart-item-img {
+  transform: scale(1.04) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+.cart-item-img img {
+  transition: transform 0.4s ease !important;
+}
+.cart-item:hover .cart-item-img img {
+  transform: scale(1.08) !important;
+}
+
+.cart-qty-btn {
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+.cart-qty-btn:hover {
+  transform: scale(1.15) !important;
+}
+.cart-qty-btn:active {
+  transform: scale(0.9) !important;
+}
+
+.cart-remove-btn {
+  transition: color 0.25s ease, background 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+.cart-remove-btn:hover {
+  transform: rotate(12deg) scale(1.15) !important;
+}
+
+.cart-summary-card {
+  animation: fadeInRight 0.6s ease 0.2s both !important;
+  transition: box-shadow 0.3s ease !important;
+}
+.cart-summary-card:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+}
+
+.cart-clear-btn {
+  transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease,
+              transform 0.2s ease !important;
+}
+.cart-clear-btn:hover {
+  transform: translateY(-1px) !important;
+}
+
+.checkout-btn {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease !important;
+}
+.checkout-btn:hover {
+  transform: translateY(-3px) scale(1.01) !important;
+}
+.checkout-btn:active {
+  transform: translateY(0) scale(0.99) !important;
+}
+
+.cart-empty-icon {
+  animation: float 3s ease-in-out infinite !important;
+}
+
+/* ===== Checkout Animations ===== */
+.checkout-section {
+  animation: fadeInUp 0.5s ease both !important;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+.checkout-section:nth-child(1) { animation-delay: 0.05s; }
+.checkout-section:nth-child(2) { animation-delay: 0.15s; }
+.checkout-section:nth-child(3) { animation-delay: 0.25s; }
+
+.payment-method-option {
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.2s ease !important;
+}
+.payment-method-option:hover {
+  transform: translateX(4px) !important;
+}
+.payment-method-option.selected {
+  transform: translateX(4px) !important;
+}
+
+.checkout-section-title .step-num {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+.checkout-section:hover .step-num {
+  transform: scale(1.15) rotate(5deg) !important;
+}
+
+/* ===== Button Micro-interactions ===== */
+.btn-primary {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease, opacity 0.3s ease !important;
+}
+.btn-primary:hover {
+  transform: translateY(-3px) !important;
+}
+.btn-primary:active {
+  transform: translateY(-1px) scale(0.98) !important;
+}
+
+.btn-outline {
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease,
+              transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+.btn-outline:hover {
+  transform: translateY(-3px) !important;
+}
+.btn-outline:active {
+  transform: translateY(0) !important;
+}
+
+.btn-ghost {
+  transition: color 0.25s ease, background 0.25s ease, transform 0.2s ease !important;
+}
+.btn-ghost:hover {
+  transform: translateY(-1px) !important;
+}
+
+/* ===== Card Hover ===== */
+.card {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              border-color 0.35s ease, box-shadow 0.35s ease !important;
+}
+.card:hover {
+  transform: translateY(-4px) !important;
+  border-color: rgba(229, 62, 62, 0.35) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ===== Form Inputs ===== */
+.form-input,
+.form-select,
+.form-textarea {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease !important;
+}
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  transform: scale(1.01) !important;
+}
+
+/* ===== Product Details Page ===== */
+.product-details-img {
+  animation: fadeInLeft 0.6s ease both !important;
+  transition: transform 0.4s ease, box-shadow 0.4s ease !important;
+}
+.product-details-img:hover {
+  transform: scale(1.02) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+}
+.product-details-img img {
+  transition: transform 0.6s ease !important;
+}
+.product-details-img:hover img {
+  transform: scale(1.05) !important;
+}
+
+.product-details-info {
+  animation: fadeInRight 0.6s ease 0.15s both !important;
+}
+.product-details-info h1 {
+  transition: color 0.25s ease !important;
+}
+
+.product-details-price {
+  animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both !important;
+}
+
+.quantity-btn {
+  transition: border-color 0.25s ease, background 0.25s ease,
+              transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+.quantity-btn:hover {
+  transform: scale(1.2) !important;
+}
+.quantity-btn:active {
+  transform: scale(0.9) !important;
+}
+
+/* ===== Table Row Hover ===== */
+tbody tr {
+  transition: background 0.2s ease, transform 0.2s ease !important;
+}
+tbody tr:hover {
+  transform: translateX(3px) !important;
+}
+
+/* ===== Dashboard / Profile Animations ===== */
+.page-wrapper {
+  animation: fadeInUp 0.5s ease both !important;
+}
+
+.page-header {
+  animation: fadeInDown 0.5s ease both !important;
+}
+
+/* ===== Promo/Coupon Input ===== */
+.promo-input {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease !important;
+}
+.promo-input:focus {
+  transform: scale(1.01) !important;
+}
+
+.promo-btn {
+  transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease,
+              transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+.promo-btn:hover {
+  transform: scale(1.05) !important;
+}
+
+/* ===== Footer Links ===== */
+footer a {
+  transition: color 0.25s ease, transform 0.25s ease !important;
+}
+footer a:hover {
+  transform: translateY(-1px) !important;
+}
+
+/* ===== Spinner ===== */
+.spinner {
+  animation: spin 0.7s linear infinite !important;
+}
+
+/* ===== Scroll-triggered reveal (via JS class) ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== Responsive: reduce motion for accessibility ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
