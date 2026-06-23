@@ -1,17 +1,32 @@
 import mongoose from "mongoose";
 
-const connectDB = async () => {
-    try {
-        const conn = await mongoose.connect(`${process.env.MONGO_URL}/E-Kart`);
-        console.log("MongoDB connection successful");
-    }
+let cached = global.mongoose;
 
-    catch(error) {
-        console.log("MongoDB connection failed", error);
-    }
+if (!cached) {
+    cached = global.mongoose = { conn: null, promise: null };
 }
 
-export default connectDB;
+const connectDB = async () => {
+    if (cached.conn) {
+        return cached.conn;
+    }
 
+    if (!cached.promise) {
+        cached.promise = mongoose.connect(process.env.MONGO_URL, {
+            serverSelectionTimeoutMS: 10000,
+            socketTimeoutMS: 45000,
+        }).then((mongoose) => {
+            console.log("MongoDB connection successful");
+            return mongoose;
+        }).catch((error) => {
+            console.log("MongoDB connection failed", error);
+            cached.promise = null;
+            throw error;
+        });
+    }
 
-// // MONGO_URL = "mongodb+srv://hamzaumairkhan:hamza173314?@cluster0.3h7azao.mongodb.net/"
+    cached.conn = await cached.promise;
+    return cached.conn;
+};
+
+export default connectDB;
