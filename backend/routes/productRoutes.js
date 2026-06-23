@@ -5,7 +5,7 @@ import admin from "../middleware/adminMiddleware.js";
 import { getProducts , createProduct , getProductById , updateProduct , deleteProduct } from "../controllers/productController.js";
 import multer from "multer";
 
-const upload = multer({ dest: "uploads/" });
+const upload = multer({ storage: multer.memoryStorage() });
 
 // all prpoducts
 router.route("/").get(getProducts).post(protect, admin, upload.single("image"), createProduct);

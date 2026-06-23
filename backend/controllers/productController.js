@@ -30,9 +30,12 @@ export const createProduct = async (req, res) => {
         let imageUrls = [];
 
         if (req.file) {
-            const result = await cloudinary.uploader.upload(req.file.path, {
-                folder: "products"
-                
+            const result = await new Promise((resolve, reject) => {
+                const stream = cloudinary.uploader.upload_stream(
+                    { folder: "products" },
+                    (error, result) => { if (error) reject(error); else resolve(result); }
+                );
+                stream.end(req.file.buffer);
             });
             imageUrls = [result.secure_url];
         }
@@ -65,8 +68,12 @@ export const updateProduct = async (req, res) => {
         }
 
         if (req.file) {
-            const result = await cloudinary.uploader.upload(req.file.path, {
-                folder: "products"
+            const result = await new Promise((resolve, reject) => {
+                const stream = cloudinary.uploader.upload_stream(
+                    { folder: "products" },
+                    (error, result) => { if (error) reject(error); else resolve(result); }
+                );
+                stream.end(req.file.buffer);
             });
             product.imageUrls = [result.secure_url];
         }
