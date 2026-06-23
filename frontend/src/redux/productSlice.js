@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API = `${import.meta.env.VITE_API_URL || '/api'}/products`;
+const API = `${import.meta.env.VITE_API_URL || '/_/backend/api'}/products`;
 
 export const fetchProducts = createAsyncThunk('products/fetchAll', async (_, { rejectWithValue }) => {
   try {

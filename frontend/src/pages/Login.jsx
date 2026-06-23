@@ -20,7 +20,7 @@ const Login = () => {
     e.preventDefault();
     dispatch(loginStart());
     try {
-      const { data } = await axios.post(`${import.meta.env.VITE_API_URL || '/api'}/auth/login`, form);
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL || '/_/backend/api'}/auth/login`, form);
       dispatch(loginSuccess(data));
       toast.success(`Welcome back, ${data.name}! 🎉`, {
         style: { background: 'var(--bg-card)', color: 'white', border: '1px solid var(--bg-border)' },
