@@ -15,7 +15,17 @@ const allowedOrigins = [
 ].filter(Boolean);
 
 app.use(cors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps, curl requests)
+        if (!origin) return callback(null, true);
+        
+        // Allow allowed origins and any vercel preview deployments
+        if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.vercel.app')) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     credentials: true,
 }));
 
@@ -25,13 +35,16 @@ const PORT = process.env.PORT || 8000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Root route for health check
+app.get('/', (req, res) => {
+    res.send('Cartworx API is running successfully!');
+});
+
 app.use('/api/auth/', userRoutes);
 app.use('/api/products/', productRoutes);
 app.use('/api/orders/', orderRoutes);
 app.use('/api/payment/', paymentRoutes);
 app.use('/api/analytics/', analyticsRoutes);
-
-// http://localhost:8000/api/auth/user/register
 
 // Export the app for Vercel serverless function
 export default app;
