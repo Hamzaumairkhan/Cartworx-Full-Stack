@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { FiMapPin, FiCreditCard, FiTruck, FiDollarSign } from 'react-icons/fi';
+import { FiMapPin, FiCreditCard, FiTruck, FiDollarSign, FiShoppingBag } from 'react-icons/fi';
 import { selectCartItems, selectCartTotal, clearCart } from '../redux/cartSlice';
 import { placeOrder } from '../redux/userSlice';
 import toast from 'react-hot-toast';
@@ -45,7 +45,7 @@ const Checkout = () => {
     const result = await dispatch(placeOrder({ orderData, token }));
     if (placeOrder.fulfilled.match(result)) {
       dispatch(clearCart());
-      toast.success('Order placed successfully! 🎉');
+      toast.success('Order placed successfully!');
       navigate('/order-success', { state: { order: result.payload } });
     } else {
       toast.error(result.payload || 'Failed to place order');
@@ -135,8 +135,8 @@ const Checkout = () => {
             <div style={{ marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
               {cartItems.map((item) => (
                 <div key={item._id} style={{ display: 'flex', alignItems: 'center', gap: '0.875rem' }}>
-                  <div style={{ width: 52, height: 52, borderRadius: 8, background: 'var(--bg-input)', overflow: 'hidden', flexShrink: 0 }}>
-                    {item.imageUrls?.[0] ? <img src={item.imageUrls[0]} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem' }}>🛍️</div>}
+                  <div style={{ width: 60, height: 60, borderRadius: 8, overflow: 'hidden', background: 'var(--bg-card)', flexShrink: 0, border: '1px solid var(--bg-border)' }}>
+                    {item.imageUrls?.[0] ? <img src={item.imageUrls[0]} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><FiShoppingBag size={24} color="var(--text-dim)" /></div>}
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: '0.875rem', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.name}</div>

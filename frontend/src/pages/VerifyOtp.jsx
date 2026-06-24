@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { FiMail, FiLock, FiAlertCircle, FiCheckCircle } from 'react-icons/fi';
+import { FiMail, FiLock, FiAlertCircle, FiCheckCircle, FiShoppingCart } from 'react-icons/fi';
 import axios from 'axios';
 import { loginStart, loginSuccess, loginFail } from '../redux/authSlice';
 import toast from 'react-hot-toast';
@@ -32,6 +32,10 @@ const VerifyOtp = () => {
     return () => clearInterval(interval);
   }, [timer]);
 
+  useEffect(() => {
+    dispatch(clearError()); // Force reset loading state on mount
+  }, [dispatch]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email) {
@@ -51,8 +55,8 @@ const VerifyOtp = () => {
       // verify-otp returns full user info + token on success
       dispatch(loginSuccess(data));
       
-      toast.success(`Account verified! Welcome to Cartworx, ${data.name}! 🎉`, {
-        style: { background: 'var(--bg-card)', color: 'white', border: '1px solid var(--bg-border)' },
+      toast.success(`Account verified! Welcome to Cartworx, ${data.name}!`, {
+        style: { background: 'var(--bg-card)', color: 'var(--text-main)', border: '1px solid var(--bg-border)' },
       });
       
       navigate(data.role === 'admin' ? '/admin' : '/');
@@ -85,7 +89,7 @@ const VerifyOtp = () => {
 
       <div className="auth-card">
         <div className="auth-logo">
-          <div className="logo-icon">🛒</div>
+          <div className="logo-icon"><FiShoppingCart size={28} /></div>
           <span>Cart<span style={{ color: 'var(--primary)' }}>worx</span></span>
         </div>
 

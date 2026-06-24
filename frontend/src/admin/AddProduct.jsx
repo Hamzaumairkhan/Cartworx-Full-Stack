@@ -39,7 +39,7 @@ const AddProduct = () => {
 
     const result = await dispatch(createProduct({ formData, token }));
     if (createProduct.fulfilled.match(result)) {
-      toast.success('Product created successfully! 🎉');
+      toast.success('Product created successfully!');
       dispatch(clearProductState());
       navigate('/admin/products');
     } else {

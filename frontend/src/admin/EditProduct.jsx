@@ -62,7 +62,7 @@ const EditProduct = () => {
 
     const result = await dispatch(updateProduct({ id, formData, token }));
     if (updateProduct.fulfilled.match(result)) {
-      toast.success('Product updated successfully! 🎉');
+      toast.success('Product updated successfully!');
       dispatch(clearProductState());
       navigate('/admin/products');
     } else {

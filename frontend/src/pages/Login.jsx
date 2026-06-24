@@ -22,15 +22,15 @@ const Login = () => {
     try {
       const { data } = await axios.post(`${import.meta.env.VITE_API_URL || '/api'}/auth/login`, form);
       dispatch(loginSuccess(data));
-      toast.success(`Welcome back, ${data.name}! 🎉`, {
-        style: { background: 'var(--bg-card)', color: 'white', border: '1px solid var(--bg-border)' },
+      toast.success(`Welcome back, ${data.name}!`, {
+        style: { background: 'var(--bg-card)', color: 'var(--text-main)', border: '1px solid var(--bg-border)' },
       });
       navigate(data.role === 'admin' ? '/admin' : '/');
     } catch (err) {
       if (err.response?.data?.isVerified === false) {
         dispatch(clearError());
         toast.error(err.response.data.message || 'Please verify your account.', {
-          style: { background: 'var(--bg-card)', color: 'white', border: '1px solid var(--bg-border)' },
+          style: { background: 'var(--bg-card)', color: 'var(--text-main)', border: '1px solid var(--bg-border)' },
         });
         navigate('/verify-otp', { state: { email: form.email } });
       } else {

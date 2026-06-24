@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { FiShoppingCart, FiStar, FiHeart } from 'react-icons/fi';
+import { FiShoppingCart, FiStar, FiHeart, FiShoppingBag } from 'react-icons/fi';
 import { addToCart } from '../redux/cartSlice';
 import toast from 'react-hot-toast';
 import '../styles/products.css';
@@ -18,7 +18,7 @@ const ProductCard = ({ product }) => {
     }
     dispatch(addToCart(product));
     toast.success(`${product.name} added to cart!`, {
-      style: { background: 'var(--bg-card)', color: 'white', border: '1px solid var(--bg-border)' },
+      style: { background: 'var(--bg-card)', color: 'var(--text-main)', border: '1px solid var(--bg-border)' },
       iconTheme: { primary: '#e53e3e', secondary: 'white' },
     });
   };
@@ -35,7 +35,7 @@ const ProductCard = ({ product }) => {
             <img src={imageUrl} alt={product.name} loading="lazy" />
           ) : (
             <div className="product-card-img-placeholder">
-              🛍️
+              <FiShoppingBag size={48} color="var(--text-dim)" />
             </div>
           )}
 

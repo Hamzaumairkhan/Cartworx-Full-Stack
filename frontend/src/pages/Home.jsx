@@ -161,12 +161,9 @@ const Home = () => {
                       <div style={{ height: 380, position: 'relative', overflow: 'hidden', background: 'linear-gradient(145deg, #2a2020, #1a1a1a)' }}>
                         {imgUrl ? (
                           <img key={imgUrl} src={imgUrl} alt={hero.name}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.6s ease', animation: 'fadeIn 0.5s ease-in-out' }}
-                            onMouseEnter={e => e.target.style.transform = 'scale(1.07)'}
-                            onMouseLeave={e => e.target.style.transform = 'none'}
-                          />
+                               style={{ width: '100%', height: '100%', objectFit: 'contain', animation: 'fadeIn 0.5s ease-in-out' }} />
                         ) : (
-                          <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '5rem', animation: 'fadeIn 0.5s ease-in-out' }}>🛍️</div>
+                          <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'fadeIn 0.5s ease-in-out' }}><FiShoppingBag size={64} color="var(--text-dim)" /></div>
                         )}
 
                         {/* Arrows */}

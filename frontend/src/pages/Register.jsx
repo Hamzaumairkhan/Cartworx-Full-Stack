@@ -35,7 +35,7 @@ const Register = () => {
       });
       dispatch(clearError());
       toast.success(data.message || 'Registration successful! An OTP has been sent to your email.', {
-        style: { background: 'var(--bg-card)', color: 'white', border: '1px solid var(--bg-border)' },
+        style: { background: 'var(--bg-card)', color: 'var(--text-main)', border: '1px solid var(--bg-border)' },
       });
       navigate('/verify-otp', { state: { email: form.email } });
     } catch (err) {

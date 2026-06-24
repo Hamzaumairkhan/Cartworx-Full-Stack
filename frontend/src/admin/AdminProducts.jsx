@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { FiEdit2, FiTrash2, FiPlus, FiPackage } from 'react-icons/fi';
+import { FiEdit2, FiTrash2, FiPlus, FiPackage, FiShoppingBag } from 'react-icons/fi';
 import { fetchProducts, deleteProduct } from '../redux/productSlice';
 import toast from 'react-hot-toast';
 
@@ -67,10 +67,10 @@ const AdminProducts = () => {
                     <tr key={p._id}>
                       <td>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.875rem' }}>
-                          <div style={{ width: 48, height: 48, borderRadius: 8, background: 'var(--bg-input)', overflow: 'hidden', flexShrink: 0 }}>
-                            {p.imageUrls?.[0]
+                          <div style={{ width: 40, height: 40, borderRadius: 8, overflow: 'hidden', background: 'var(--bg-input)', border: '1px solid var(--bg-border)' }}>
+                            {p.imageUrls && p.imageUrls.length > 0 
                               ? <img src={p.imageUrls[0]} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                              : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem' }}>🛍️</div>
+                              : <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><FiShoppingBag size={18} color="var(--text-dim)" /></div>
                             }
                           </div>
                           <div>

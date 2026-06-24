@@ -27,7 +27,7 @@ const Cart = () => {
     <div className="cart-page">
       <div className="container">
         <div className="cart-empty">
-          <div className="cart-empty-icon">🛒</div>
+          <div className="cart-empty-icon"><FiShoppingCart /></div>
           <h3>Your cart is empty</h3>
           <p>Looks like you haven&apos;t added anything yet.</p>
           <Link to="/shop" className="btn-primary">
@@ -61,7 +61,7 @@ const Cart = () => {
                   {item.imageUrls?.[0] ? (
                     <img src={item.imageUrls[0]} alt={item.name} />
                   ) : (
-                    <div className="cart-item-img-placeholder">🛍️</div>
+                    <div className="cart-item-img-placeholder"><FiShoppingBag /></div>
                   )}
                 </div>
 

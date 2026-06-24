@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { FiShoppingCart, FiArrowLeft, FiStar, FiPackage, FiTruck, FiShield } from 'react-icons/fi';
+import { FiShoppingCart, FiArrowLeft, FiStar, FiPackage, FiTruck, FiShield, FiShoppingBag } from 'react-icons/fi';
 import { fetchProductById } from '../redux/productSlice';
 import { addToCart } from '../redux/cartSlice';
 import toast from 'react-hot-toast';
@@ -69,7 +69,7 @@ const ProductDetails = () => {
             {product.imageUrls?.[0] ? (
               <img src={product.imageUrls[0]} alt={product.name} />
             ) : (
-              <div style={{ width: '100%', height: '100%', minHeight: 400, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '6rem', background: 'var(--bg-input)' }}>🛍️</div>
+              <div style={{ width: '100%', height: '100%', minHeight: 400, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-input)' }}><FiShoppingBag size={64} color="var(--text-dim)" /></div>
             )}
           </div>
 
