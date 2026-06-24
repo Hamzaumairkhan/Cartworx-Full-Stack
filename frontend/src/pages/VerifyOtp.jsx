@@ -3,7 +3,7 @@ import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FiMail, FiLock, FiAlertCircle, FiCheckCircle, FiShoppingCart } from 'react-icons/fi';
 import axios from 'axios';
-import { loginStart, loginSuccess, loginFail } from '../redux/authSlice';
+import { loginStart, loginSuccess, loginFail, clearError } from '../redux/authSlice';
 import toast from 'react-hot-toast';
 import '../styles/auth.css';
 
