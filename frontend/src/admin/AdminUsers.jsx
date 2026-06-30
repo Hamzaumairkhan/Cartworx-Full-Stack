@@ -21,7 +21,7 @@ const RoleDropdown = ({ userId, currentRole, onRoleChange, currentUserEmail, tar
   const isSelf = currentUserEmail === targetUserEmail;
 
   return (
-    <div ref={ref} style={{ position: 'relative', display: 'inline-block' }}>
+    <div ref={ref} style={{ position: 'relative', display: 'inline-block', zIndex: open ? 10 : 1 }}>
       <button
         onClick={() => {
           if (isSelf) return toast.error("You cannot change your own role!");

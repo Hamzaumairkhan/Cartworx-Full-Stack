@@ -24,7 +24,7 @@ const StatusDropdown = ({ orderId, currentStatus, onStatusChange }) => {
   }, []);
 
   return (
-    <div ref={ref} style={{ position: 'relative', display: 'inline-block' }}>
+    <div ref={ref} style={{ position: 'relative', display: 'inline-block', zIndex: open ? 10 : 1 }}>
       {/* Trigger Button */}
       <button
         onClick={() => setOpen(!open)}
