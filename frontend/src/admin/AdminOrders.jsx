@@ -11,23 +11,22 @@ const statusBorder = { pending: 'rgba(246,173,85,0.3)', shipped: 'rgba(99,179,23
 const statusEmoji = { pending: '⏳', shipped: '🚚', delivered: '✅' };
 
 // Custom Dropdown Component
-const StatusDropdown = ({ orderId, currentStatus, onStatusChange }) => {
-  const [open, setOpen] = useState(false);
+const StatusDropdown = ({ orderId, currentStatus, onStatusChange, isOpen, onToggle }) => {
   const ref = useRef(null);
 
   useEffect(() => {
     const handleOutside = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+      if (ref.current && !ref.current.contains(e.target) && isOpen) onToggle(false);
     };
     document.addEventListener('mousedown', handleOutside);
     return () => document.removeEventListener('mousedown', handleOutside);
-  }, []);
+  }, [isOpen, onToggle]);
 
   return (
-    <div ref={ref} style={{ position: 'relative', display: 'inline-block', zIndex: open ? 10 : 1 }}>
+    <div ref={ref} style={{ position: 'relative', display: 'inline-block', zIndex: isOpen ? 10 : 1 }}>
       {/* Trigger Button */}
       <button
-        onClick={() => setOpen(!open)}
+        onClick={() => onToggle(!isOpen)}
         style={{
           display: 'flex', alignItems: 'center', gap: '0.4rem',
           padding: '0.35rem 0.7rem',
@@ -43,11 +42,11 @@ const StatusDropdown = ({ orderId, currentStatus, onStatusChange }) => {
       >
         <span>{statusEmoji[currentStatus]}</span>
         <span>{currentStatus.charAt(0).toUpperCase() + currentStatus.slice(1)}</span>
-        <FiChevronDown style={{ fontSize: '0.75rem', transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }} />
+        <FiChevronDown style={{ fontSize: '0.75rem', transition: 'transform 0.2s', transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} />
       </button>
 
       {/* Dropdown Menu */}
-      {open && (
+      {isOpen && (
         <div style={{
           position: 'absolute', top: 'calc(100% + 6px)', right: 0,
           background: '#1e1e1e',
@@ -62,7 +61,7 @@ const StatusDropdown = ({ orderId, currentStatus, onStatusChange }) => {
           {STATUS_OPTIONS.map((s) => (
             <button
               key={s}
-              onClick={() => { onStatusChange(orderId, s); setOpen(false); }}
+              onClick={() => { onStatusChange(orderId, s); onToggle(false); }}
               style={{
                 display: 'flex', alignItems: 'center', gap: '0.5rem',
                 width: '100%', padding: '0.5rem 0.75rem',
@@ -93,6 +92,7 @@ const AdminOrders = () => {
   const { allOrders, loading } = useSelector((s) => s.user);
   const { token } = useSelector((s) => s.auth);
   const [filter, setFilter] = useState('all');
+  const [openDropdownId, setOpenDropdownId] = useState(null);
 
   useEffect(() => {
     if (token) dispatch(fetchAllOrders(token));
@@ -166,7 +166,7 @@ const AdminOrders = () => {
                 </thead>
                 <tbody>
                   {filtered.map((order) => (
-                    <tr key={order._id}>
+                    <tr key={order._id} style={{ position: 'relative', zIndex: openDropdownId === order._id ? 10 : 1 }}>
                       <td style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: 'var(--text-muted)' }}>#{order._id.slice(-8).toUpperCase()}</td>
                       <td style={{ fontSize: '0.875rem', fontWeight: 500 }}>{order.user?.name || 'N/A'}</td>
                       <td style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>{order.items?.length || 0} item(s)</td>
@@ -178,6 +178,8 @@ const AdminOrders = () => {
                           orderId={order._id}
                           currentStatus={order.status}
                           onStatusChange={handleStatusChange}
+                          isOpen={openDropdownId === order._id}
+                          onToggle={(isOpen) => setOpenDropdownId(isOpen ? order._id : null)}
                         />
                       </td>
                     </tr>

@@ -6,26 +6,25 @@ import toast from 'react-hot-toast';
 
 const ROLE_OPTIONS = ['user', 'admin'];
 
-const RoleDropdown = ({ userId, currentRole, onRoleChange, currentUserEmail, targetUserEmail }) => {
-  const [open, setOpen] = useState(false);
+const RoleDropdown = ({ userId, currentRole, onRoleChange, currentUserEmail, targetUserEmail, isOpen, onToggle }) => {
   const ref = useRef(null);
 
   useEffect(() => {
     const handleOutside = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+      if (ref.current && !ref.current.contains(e.target) && isOpen) onToggle(false);
     };
     document.addEventListener('mousedown', handleOutside);
     return () => document.removeEventListener('mousedown', handleOutside);
-  }, []);
+  }, [isOpen, onToggle]);
 
   const isSelf = currentUserEmail === targetUserEmail;
 
   return (
-    <div ref={ref} style={{ position: 'relative', display: 'inline-block', zIndex: open ? 10 : 1 }}>
+    <div ref={ref} style={{ position: 'relative', display: 'inline-block', zIndex: isOpen ? 10 : 1 }}>
       <button
         onClick={() => {
           if (isSelf) return toast.error("You cannot change your own role!");
-          setOpen(!open);
+          onToggle(!isOpen);
         }}
         style={{
           display: 'flex', alignItems: 'center', gap: '0.4rem',
@@ -44,10 +43,10 @@ const RoleDropdown = ({ userId, currentRole, onRoleChange, currentUserEmail, tar
       >
         <span>{currentRole === 'admin' ? <FiShield /> : <FiUser />}</span>
         <span>{currentRole}</span>
-        {!isSelf && <FiChevronDown style={{ fontSize: '0.75rem', transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }} />}
+        {!isSelf && <FiChevronDown style={{ fontSize: '0.75rem', transition: 'transform 0.2s', transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} />}
       </button>
 
-      {open && (
+      {isOpen && (
         <div style={{
           position: 'absolute', top: 'calc(100% + 6px)', right: 0,
           background: '#1e1e1e',
@@ -62,7 +61,7 @@ const RoleDropdown = ({ userId, currentRole, onRoleChange, currentUserEmail, tar
           {ROLE_OPTIONS.map((r) => (
             <button
               key={r}
-              onClick={() => { onRoleChange(userId, r); setOpen(false); }}
+              onClick={() => { onRoleChange(userId, r); onToggle(false); }}
               style={{
                 display: 'flex', alignItems: 'center', gap: '0.5rem',
                 width: '100%', padding: '0.5rem 0.75rem',
@@ -91,6 +90,7 @@ const AdminUsers = () => {
   const dispatch = useDispatch();
   const { users, loading } = useSelector((s) => s.user);
   const { token, user: currentUser } = useSelector((s) => s.auth);
+  const [openDropdownId, setOpenDropdownId] = useState(null);
 
   useEffect(() => {
     if (token) dispatch(fetchAllUsers(token));
@@ -160,7 +160,7 @@ const AdminUsers = () => {
                 </thead>
                 <tbody>
                   {users.map((user) => (
-                    <tr key={user._id}>
+                    <tr key={user._id} style={{ position: 'relative', zIndex: openDropdownId === user._id ? 10 : 1 }}>
                       <td>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                           <div style={{
@@ -182,6 +182,8 @@ const AdminUsers = () => {
                           onRoleChange={handleRoleChange} 
                           currentUserEmail={currentUser?.email}
                           targetUserEmail={user.email}
+                          isOpen={openDropdownId === user._id}
+                          onToggle={(isOpen) => setOpenDropdownId(isOpen ? user._id : null)}
                         />
                       </td>
                       <td style={{ fontFamily: 'monospace', fontSize: '0.75rem', color: 'var(--text-dim)' }}>{user._id.slice(-12)}</td>
