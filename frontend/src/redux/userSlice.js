@@ -14,6 +14,19 @@ export const fetchAllUsers = createAsyncThunk('user/fetchAll', async (token, { r
   }
 });
 
+export const updateUserRole = createAsyncThunk('user/updateRole', async ({ id, role, token }, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.put(
+      `${API}/auth/${id}/role`,
+      { role },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    return data;
+  } catch (err) {
+    return rejectWithValue(err.response?.data?.message || 'Failed to update user role');
+  }
+});
+
 export const fetchMyOrders = createAsyncThunk('user/myOrders', async (token, { rejectWithValue }) => {
   try {
     const { data } = await axios.get(`${API}/orders/myorders`, {
@@ -96,6 +109,12 @@ const userSlice = createSlice({
       .addCase(fetchAllUsers.pending, (state) => { state.loading = true; })
       .addCase(fetchAllUsers.fulfilled, (state, action) => { state.loading = false; state.users = action.payload; })
       .addCase(fetchAllUsers.rejected, (state, action) => { state.loading = false; state.error = action.payload; })
+      // update user role
+      .addCase(updateUserRole.fulfilled, (state, action) => {
+        const updated = action.payload;
+        const idx = state.users.findIndex(u => u._id === updated._id);
+        if (idx !== -1) state.users[idx] = updated;
+      })
       // my orders
       .addCase(fetchMyOrders.pending, (state) => { state.loading = true; })
       .addCase(fetchMyOrders.fulfilled, (state, action) => { state.loading = false; state.orders = action.payload; })
