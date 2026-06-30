@@ -68,9 +68,9 @@ const Navbar = () => {
         {/* Desktop Links */}
         <ul className="navbar-links">
           <li><NavLink to="/" end><FiHome /> Home</NavLink></li>
-          <li><NavLink to="/shop"><FiGrid /> Shop</NavLink></li>
+          {user?.role !== 'admin' && <li><NavLink to="/shop"><FiGrid /> Shop</NavLink></li>}
           <li><NavLink to="/about"><FiInfo /> About</NavLink></li>
-          {isAuthenticated && <li><NavLink to="/dashboard"><FiPackage /> Dashboard</NavLink></li>}
+          {isAuthenticated && user?.role !== 'admin' && <li><NavLink to="/dashboard"><FiPackage /> Dashboard</NavLink></li>}
           {user?.role === 'admin' && <li><NavLink to="/admin"><FiShield /> Admin</NavLink></li>}
         </ul>
 
@@ -82,10 +82,12 @@ const Navbar = () => {
           </button>
 
           {/* Cart */}
-          <Link to="/cart" className="nav-icon-btn" title="Cart">
-            <FiShoppingCart />
-            {cartCount > 0 && <span className="nav-cart-badge">{cartCount > 9 ? '9+' : cartCount}</span>}
-          </Link>
+          {user?.role !== 'admin' && (
+            <Link to="/cart" className="nav-icon-btn" title="Cart">
+              <FiShoppingCart />
+              {cartCount > 0 && <span className="nav-cart-badge">{cartCount > 9 ? '9+' : cartCount}</span>}
+            </Link>
+          )}
 
           {/* User Menu */}
           {isAuthenticated ? (
@@ -98,7 +100,9 @@ const Navbar = () => {
               {dropdownOpen && (
                 <div className="nav-dropdown">
                   <Link to="/profile" onClick={() => setDropdownOpen(false)}><FiUser /> Profile</Link>
-                  <Link to="/dashboard" onClick={() => setDropdownOpen(false)}><FiPackage /> My Orders</Link>
+                  {user?.role !== 'admin' && (
+                    <Link to="/dashboard" onClick={() => setDropdownOpen(false)}><FiPackage /> My Orders</Link>
+                  )}
                   {user?.role === 'admin' && (
                     <Link to="/admin" onClick={() => setDropdownOpen(false)}><FiShield /> Admin Panel</Link>
                   )}
@@ -130,12 +134,12 @@ const Navbar = () => {
 }>
   <ul>
     <li><NavLink to="/" end onClick={() => setMobileOpen(false)}><FiHome /> Home</NavLink></li>
-    <li><NavLink to="/shop" onClick={() => setMobileOpen(false)}><FiGrid /> Shop</NavLink></li>
+    {user?.role !== 'admin' && <li><NavLink to="/shop" onClick={() => setMobileOpen(false)}><FiGrid /> Shop</NavLink></li>}
     <li><NavLink to="/about" onClick={() => setMobileOpen(false)}><FiInfo /> About</NavLink></li>
-    <li><NavLink to="/cart" onClick={() => setMobileOpen(false)}><FiShoppingCart /> Cart {cartCount > 0 && `(${cartCount})`}</NavLink></li>
+    {user?.role !== 'admin' && <li><NavLink to="/cart" onClick={() => setMobileOpen(false)}><FiShoppingCart /> Cart {cartCount > 0 && `(${cartCount})`}</NavLink></li>}
     {isAuthenticated ? (
       <>
-        <li><NavLink to="/dashboard" onClick={() => setMobileOpen(false)}><FiPackage /> Dashboard</NavLink></li>
+        {user?.role !== 'admin' && <li><NavLink to="/dashboard" onClick={() => setMobileOpen(false)}><FiPackage /> Dashboard</NavLink></li>}
         <li><NavLink to="/profile" onClick={() => setMobileOpen(false)}><FiUser /> Profile</NavLink></li>
         {user?.role === 'admin' && <li><NavLink to="/admin" onClick={() => setMobileOpen(false)}><FiShield /> Admin</NavLink></li>}
         <li><button onClick={handleLogout} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0.75rem 1rem', color: 'var(--error)', width: '100%', borderRadius: 'var(--radius-sm)', fontSize: '0.95rem', fontWeight: '500' }}><FiLogOut /> Logout</button></li>

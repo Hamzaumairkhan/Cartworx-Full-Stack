@@ -76,6 +76,19 @@ const PrivateRoute = ({ children }) => {
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 };
 
+const UserPrivateRoute = ({ children }) => {
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (user?.role === 'admin') return <Navigate to="/admin" replace />;
+  return children;
+};
+
+const NoAdminRoute = ({ children }) => {
+  const { user } = useSelector((state) => state.auth);
+  if (user?.role === 'admin') return <Navigate to="/admin" replace />;
+  return children;
+};
+
 const AdminRoute = ({ children }) => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   return isAuthenticated && user?.role === 'admin' ? children : <Navigate to="/" replace />;
@@ -93,9 +106,9 @@ function App() {
               <Routes>
                 {/* Public Routes */}
                 <Route path="/" element={<Home />} />
-                <Route path="/shop" element={<Shop />} />
+                <Route path="/shop" element={<NoAdminRoute><Shop /></NoAdminRoute>} />
                 <Route path="/about" element={<About />} />
-                <Route path="/cart" element={<Cart />} />
+                <Route path="/cart" element={<NoAdminRoute><Cart /></NoAdminRoute>} />
                 <Route path="/product/:id" element={<ProductDetails />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
@@ -103,14 +116,14 @@ function App() {
 
                 {/* User Private Routes */}
                 <Route path="/checkout" element={
-                  <PrivateRoute>
+                  <UserPrivateRoute>
                     <Checkout />
-                  </PrivateRoute>
+                  </UserPrivateRoute>
                 } />
                 <Route path="/dashboard" element={
-                  <PrivateRoute>
+                  <UserPrivateRoute>
                     <Dashboard />
-                  </PrivateRoute>
+                  </UserPrivateRoute>
                 } />
                 <Route path="/profile" element={
                   <PrivateRoute>
@@ -118,9 +131,9 @@ function App() {
                   </PrivateRoute>
                 } />
                 <Route path="/order-success" element={
-                  <PrivateRoute>
+                  <UserPrivateRoute>
                     <OrderSuccess />
-                  </PrivateRoute>
+                  </UserPrivateRoute>
                 } />
 
                 {/* Admin Routes */}
