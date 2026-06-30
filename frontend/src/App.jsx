@@ -106,7 +106,7 @@ function App() {
               <Routes>
                 {/* Public Routes */}
                 <Route path="/" element={<Home />} />
-                <Route path="/shop" element={<NoAdminRoute><Shop /></NoAdminRoute>} />
+                <Route path="/shop" element={<Shop />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/cart" element={<NoAdminRoute><Cart /></NoAdminRoute>} />
                 <Route path="/product/:id" element={<ProductDetails />} />

@@ -68,10 +68,10 @@ const Navbar = () => {
         {/* Desktop Links */}
         <ul className="navbar-links">
           <li><NavLink to="/" end><FiHome /> Home</NavLink></li>
-          {user?.role !== 'admin' && <li><NavLink to="/shop"><FiGrid /> Shop</NavLink></li>}
+          <li><NavLink to="/shop"><FiGrid /> Shop</NavLink></li>
           <li><NavLink to="/about"><FiInfo /> About</NavLink></li>
           {isAuthenticated && user?.role !== 'admin' && <li><NavLink to="/dashboard"><FiPackage /> Dashboard</NavLink></li>}
-          {user?.role === 'admin' && <li><NavLink to="/admin"><FiShield /> Admin</NavLink></li>}
+          {user?.role === 'admin' && <li><NavLink to="/admin"><FiShield /> Admin Dashboard</NavLink></li>}
         </ul>
 
         {/* Right Section */}
@@ -134,14 +134,14 @@ const Navbar = () => {
 }>
   <ul>
     <li><NavLink to="/" end onClick={() => setMobileOpen(false)}><FiHome /> Home</NavLink></li>
-    {user?.role !== 'admin' && <li><NavLink to="/shop" onClick={() => setMobileOpen(false)}><FiGrid /> Shop</NavLink></li>}
+    <li><NavLink to="/shop" onClick={() => setMobileOpen(false)}><FiGrid /> Shop</NavLink></li>
     <li><NavLink to="/about" onClick={() => setMobileOpen(false)}><FiInfo /> About</NavLink></li>
     {user?.role !== 'admin' && <li><NavLink to="/cart" onClick={() => setMobileOpen(false)}><FiShoppingCart /> Cart {cartCount > 0 && `(${cartCount})`}</NavLink></li>}
     {isAuthenticated ? (
       <>
         {user?.role !== 'admin' && <li><NavLink to="/dashboard" onClick={() => setMobileOpen(false)}><FiPackage /> Dashboard</NavLink></li>}
         <li><NavLink to="/profile" onClick={() => setMobileOpen(false)}><FiUser /> Profile</NavLink></li>
-        {user?.role === 'admin' && <li><NavLink to="/admin" onClick={() => setMobileOpen(false)}><FiShield /> Admin</NavLink></li>}
+        {user?.role === 'admin' && <li><NavLink to="/admin" onClick={() => setMobileOpen(false)}><FiShield /> Admin Dashboard</NavLink></li>}
         <li><button onClick={handleLogout} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0.75rem 1rem', color: 'var(--error)', width: '100%', borderRadius: 'var(--radius-sm)', fontSize: '0.95rem', fontWeight: '500' }}><FiLogOut /> Logout</button></li>
       </>
     ) : (
