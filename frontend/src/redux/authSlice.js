@@ -41,8 +41,15 @@ const authSlice = createSlice({
       state.error = null;
       state.loading = false;
     },
+    updateSuccess(state, action) {
+      state.loading = false;
+      state.user = action.payload;
+      state.token = action.payload.token;
+      state.error = null;
+      localStorage.setItem('cartworx_user', JSON.stringify(action.payload));
+    },
   },
 });
 
-export const { loginStart, loginSuccess, loginFail, logout, clearError } = authSlice.actions;
+export const { loginStart, loginSuccess, loginFail, logout, clearError, updateSuccess } = authSlice.actions;
 export default authSlice.reducer;

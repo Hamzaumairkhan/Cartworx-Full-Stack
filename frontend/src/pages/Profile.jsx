@@ -1,16 +1,49 @@
-import { useSelector } from 'react-redux';
-import { FiUser, FiMail, FiShield, FiCalendar, FiPackage, FiEdit2 } from 'react-icons/fi';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { FiUser, FiMail, FiShield, FiPackage, FiEdit2, FiX, FiSave } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { updateSuccess } from '../redux/authSlice';
+
+const API = import.meta.env.VITE_API_URL || '/api';
 
 const Profile = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { user, token } = useSelector((state) => state.auth);
   const { orders } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: user?.name || '',
+    email: user?.email || '',
+    password: '',
+  });
 
   const getInitials = (name) =>
     name?.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2) || 'U';
 
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const config = { headers: { Authorization: `Bearer ${token}` } };
+      const { data } = await axios.put(`${API}/auth/profile`, formData, config);
+      dispatch(updateSuccess(data));
+      toast.success('Profile updated successfully');
+      setIsEditing(false);
+      setFormData({ ...formData, password: '' });
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to update profile');
+    }
+    setLoading(false);
+  };
+
   return (
-    <div style={{ paddingTop: '90px', minHeight: '100vh' }}>
+    <div style={{ paddingTop: '90px', minHeight: '100vh', position: 'relative' }}>
       <div className="container" style={{ padding: '2rem 1.5rem 4rem', maxWidth: 800 }}>
         <h1 style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '2rem' }}>My Profile</h1>
 
@@ -66,6 +99,7 @@ const Profile = () => {
             display: 'flex', alignItems: 'center', gap: '0.4rem',
             transition: 'var(--transition)',
           }}
+            onClick={() => setIsEditing(true)}
             onMouseEnter={e => { e.currentTarget.style.color = 'white'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; }}
             onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-muted)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; }}
           >
@@ -120,6 +154,90 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
+      {/* Edit Modal */}
+      {isEditing && (
+        <div style={{
+          position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+          background: 'rgba(0,0,0,0.8)', zIndex: 1000, display: 'flex',
+          alignItems: 'center', justifyContent: 'center', padding: '1rem',
+          backdropFilter: 'blur(5px)',
+        }}>
+          <div style={{
+            background: 'var(--bg-card)', border: '1px solid var(--bg-border)',
+            borderRadius: 'var(--radius-lg)', width: '100%', maxWidth: 450,
+            padding: '2rem', position: 'relative',
+          }}>
+            <button
+              onClick={() => setIsEditing(false)}
+              style={{
+                position: 'absolute', top: '1rem', right: '1rem',
+                background: 'none', border: 'none', color: 'var(--text-muted)',
+                cursor: 'pointer', fontSize: '1.2rem',
+              }}
+            >
+              <FiX />
+            </button>
+            <h3 style={{ fontSize: '1.4rem', fontWeight: 800, marginBottom: '1.5rem' }}>Edit Profile</h3>
+            
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.4rem', color: 'var(--text-muted)' }}>Full Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                  style={{
+                    width: '100%', padding: '0.75rem', background: 'var(--bg-body)',
+                    border: '1px solid var(--bg-border)', borderRadius: 'var(--radius-sm)',
+                    color: 'white',
+                  }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.4rem', color: 'var(--text-muted)' }}>Email Address</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                  style={{
+                    width: '100%', padding: '0.75rem', background: 'var(--bg-body)',
+                    border: '1px solid var(--bg-border)', borderRadius: 'var(--radius-sm)',
+                    color: 'white',
+                  }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.875rem', marginBottom: '0.4rem', color: 'var(--text-muted)' }}>New Password (optional)</label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Leave blank to keep current password"
+                  style={{
+                    width: '100%', padding: '0.75rem', background: 'var(--bg-body)',
+                    border: '1px solid var(--bg-border)', borderRadius: 'var(--radius-sm)',
+                    color: 'white',
+                  }}
+                />
+              </div>
+              <button
+                type="submit"
+                className="btn-primary"
+                disabled={loading}
+                style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', padding: '0.875rem' }}
+              >
+                {loading ? <div className="spinner" style={{ width: 20, height: 20, borderWidth: 2 }}></div> : <><FiSave /> Save Changes</>}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
