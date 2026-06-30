@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { FiTarget, FiHeart, FiAward, FiUsers, FiShoppingBag, FiArrowRight } from 'react-icons/fi';
+import { FiTarget, FiHeart, FiAward, FiUsers, FiShoppingBag, FiArrowRight, FiTruck, FiLock, FiRefreshCw, FiMessageCircle } from 'react-icons/fi';
 
 import { FiShoppingCart } from 'react-icons/fi';
 const About = () => {
@@ -42,7 +42,7 @@ const About = () => {
           </p>
           <div className="anim-fade-in-up delay-300" style={{ display: 'flex', gap: '3rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             {[
-              { value: '2021', label: 'Founded' },
+              { value: '2026', label: 'Founded' },
               { value: '50K+', label: 'Customers' },
               { value: '10K+', label: 'Products' },
               { value: '4.9★', label: 'Rating' },
@@ -79,10 +79,10 @@ const About = () => {
 
             <div className="anim-fade-in-right" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
               {[
-                { emoji: '🚀', title: 'Fast Delivery', desc: '2-3 business days' },
-                { emoji: '🔒', title: 'Secure', desc: '256-bit SSL encryption' },
-                { emoji: '♻️', title: 'Sustainable', desc: 'Eco-friendly packaging' },
-                { emoji: '💬', title: '24/7 Support', desc: 'Always here to help' },
+                { icon: <FiTruck />, title: 'Fast Delivery', desc: '2-3 business days', color: '#fc8181' },
+                { icon: <FiLock />, title: 'Secure', desc: '256-bit SSL encryption', color: '#f6ad55' },
+                { icon: <FiRefreshCw />, title: 'Sustainable', desc: 'Eco-friendly packaging', color: '#68d391' },
+                { icon: <FiMessageCircle />, title: '24/7 Support', desc: 'Always here to help', color: '#b794f4' },
               ].map((item, i) => (
                 <div key={item.title} className={`anim-scale-in delay-${(i + 1) * 100}`} style={{
                   background: 'var(--bg-card)', border: '1px solid var(--bg-border)',
@@ -92,7 +92,7 @@ const About = () => {
                   onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(229,62,62,0.3)'; e.currentTarget.style.transform = 'translateY(-6px) scale(1.03)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.3)'; }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--bg-border)'; e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'none'; }}
                 >
-                  <div style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>{item.emoji}</div>
+                  <div style={{ fontSize: '2rem', marginBottom: '0.75rem', color: item.color }}>{item.icon}</div>
                   <div style={{ fontWeight: 700, marginBottom: '0.25rem' }}>{item.title}</div>
                   <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{item.desc}</div>
                 </div>
