@@ -150,8 +150,8 @@ const AdminOrders = () => {
             <h3>No orders found</h3>
           </div>
         ) : (
-          <div style={{ background: 'var(--bg-card)', border: '1px solid var(--bg-border)', borderRadius: 'var(--radius)', overflow: 'hidden' }}>
-            <div className="table-wrapper">
+          <div style={{ background: 'var(--bg-card)', border: '1px solid var(--bg-border)', borderRadius: 'var(--radius)' }}>
+            <div className="table-wrapper" style={{ overflow: 'visible' }}>
               <table>
                 <thead>
                   <tr>
