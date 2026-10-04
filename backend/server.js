@@ -50,10 +50,10 @@ app.use('/api/analytics/', analyticsRoutes);
 export default app;
 
 // Ensure database connection is established
-connectDB();
+connectDB().catch((err) => console.error("Database connection error:", err.message));
 
 // Only listen on a port if not running in a serverless environment like Vercel
-if (process.env.NODE_ENV !== 'production') {
+if (!process.env.VERCEL) {
     app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
     });
